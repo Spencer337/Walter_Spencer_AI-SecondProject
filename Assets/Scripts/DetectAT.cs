@@ -11,9 +11,10 @@ namespace NodeCanvas.Tasks.Actions {
         public int numberOfScanCirclePoints;
         public BBParameter<float> scanRadius;
         public BBParameter<float> initialScanRadius;
+        public BBParameter<float> maxScanRadius; 
         public LayerMask targetMask;
         public float scanSpeed = 1f;
-        //public BBParameter<Transform> targetTransform;
+        public BBParameter<GameObject> targetObject; 
         private NavMeshAgent navAgent;
 
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -39,13 +40,15 @@ namespace NodeCanvas.Tasks.Actions {
             DrawCircle(agent.transform.position, scanRadius.value, scanColour, numberOfScanCirclePoints);
 
             Collider[] objectsInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, targetMask);
-            foreach (Collider objectInRange in objectsInRange)
+            //Debug.Log(objectsInRange.Length);
+            if (objectsInRange.Length != 0)
             {
-                navAgent.SetDestination(objectInRange.transform.position);
+                targetObject.value = objectsInRange[0].gameObject;
+                navAgent.SetDestination(targetObject.value.transform.position);
                 EndAction(true);
             }
             scanRadius.value += scanSpeed * Time.deltaTime;
-            if (scanRadius.value >= 7)
+            if (scanRadius.value >= maxScanRadius.value)
             {
                 EndAction(false);
             }
