@@ -30,24 +30,34 @@ namespace NodeCanvas.Tasks.Actions {
         //EndAction can be called from anywhere.
         protected override void OnExecute()
         {
+            // Set the scan radius to it's inital value
             scanRadius.value = initialScanRadius.value;
         }
 
         //Called once per frame while the action is active.
         protected override void OnUpdate()
         {
-
+            // Draw the scanning circle which comes out from the pig's position to visualize the scanning
             DrawCircle(agent.transform.position, scanRadius.value, scanColour, numberOfScanCirclePoints);
 
+            // Get a list of objects in range of a scanning sphere centered on the pig, that are on the grass layer mask
             Collider[] objectsInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, targetMask);
-            //Debug.Log(objectsInRange.Length);
+
+            // If there are any objects in the list
             if (objectsInRange.Length != 0)
             {
+                // Set the target object to the first object in the list
                 targetObject.value = objectsInRange[0].gameObject;
+                // Set the pig's destination to the target object
                 navAgent.SetDestination(targetObject.value.transform.position);
+                // End the action with a success
                 EndAction(true);
             }
+
+            // Increase the radius of the pig's scanning sphere
             scanRadius.value += scanSpeed.value * Time.deltaTime;
+
+            // If the scan radius is greater than the max scan radius, end the action with a failure
             if (scanRadius.value >= maxScanRadius.value)
             {
                 EndAction(false);

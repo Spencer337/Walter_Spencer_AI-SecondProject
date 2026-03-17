@@ -29,15 +29,18 @@ namespace NodeCanvas.Tasks.Conditions {
 		//Called once per frame while the condition is active.
 		//Return whether the condition is success or failure.
 		protected override bool OnCheck() {
+			// If the target object if not null (the pig has no grass targeted)
 			if (targetObject.value != null)
 			{
+				// Calculate the distance between the pig and the target grass
 				distanceToTarget = Vector3.Distance(agent.transform.position, targetObject.value.transform.position);
-				//Debug.Log(distanceToTarget);
+				// If the distance is less than the eatDistance, return true
 				if (distanceToTarget < eatDistance.value)
 				{
 					return true;
 				}
 			}
+			// Return false 
 			return false;
 		}
 	}

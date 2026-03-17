@@ -18,11 +18,14 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+			// If the pig has a target grass object, destroy the grass object and end the action with a success
 			if (targetObject != null)
 			{
-				targetObject.value.SetActive(false);
+				GameObject.Destroy(targetObject.value);
 				EndAction(true);
 			}
+
+			// Otherwise, end the action with a fail
 			else
 			{
                 EndAction(false);

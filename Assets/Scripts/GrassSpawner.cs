@@ -16,12 +16,17 @@ public class GrassSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Increase t by time
         t += Time.deltaTime;
+
+        // If t is greated than spawnSpeed
         if (t > spawnSpeed)
         {
             // Spawn a grass prefab at a random position in the spawn area
             SetSpawnPosition();
             Instantiate(grassPrefab, spawnPosition, Quaternion.identity);
+            
+            // Set t back to 0
             t = 0;
         }
 
@@ -29,10 +34,14 @@ public class GrassSpawner : MonoBehaviour
 
     void SetSpawnPosition()
     {
-
+        // Set the spawnX and spawnZ valuea to be within the box collider
         spawnX = Random.Range(-spawnArea.size.x / 2, spawnArea.size.x / 2);
-        spawnY = transform.position.y;
         spawnZ = Random.Range(-spawnArea.size.z / 2, spawnArea.size.z / 2);
+
+        // Set the spawnY value to be the spawner's height
+        spawnY = transform.position.y;
+        
+        // Set the spawn position with the x, y, and z variables
         spawnPosition = new Vector3 (spawnX, spawnY, spawnZ);
     }
 }
