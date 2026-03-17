@@ -13,7 +13,7 @@ namespace NodeCanvas.Tasks.Actions {
         public BBParameter<float> initialScanRadius;
         public BBParameter<float> maxScanRadius; 
         public LayerMask targetMask;
-        public float scanSpeed = 1f;
+        public BBParameter<float> scanSpeed; 
         public BBParameter<GameObject> targetObject; 
         private NavMeshAgent navAgent;
 
@@ -47,7 +47,7 @@ namespace NodeCanvas.Tasks.Actions {
                 navAgent.SetDestination(targetObject.value.transform.position);
                 EndAction(true);
             }
-            scanRadius.value += scanSpeed * Time.deltaTime;
+            scanRadius.value += scanSpeed.value * Time.deltaTime;
             if (scanRadius.value >= maxScanRadius.value)
             {
                 EndAction(false);

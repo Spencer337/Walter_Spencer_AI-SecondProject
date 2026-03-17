@@ -29,16 +29,16 @@ namespace NodeCanvas.Tasks.Conditions {
 		//Called once per frame while the condition is active.
 		//Return whether the condition is success or failure.
 		protected override bool OnCheck() {
-			distanceToTarget = Vector3.Distance(agent.transform.position, targetObject.value.transform.position);
-			//Debug.Log(distanceToTarget);
-			if (distanceToTarget < eatDistance.value)
+			if (targetObject.value != null)
 			{
-				return true;
+				distanceToTarget = Vector3.Distance(agent.transform.position, targetObject.value.transform.position);
+				//Debug.Log(distanceToTarget);
+				if (distanceToTarget < eatDistance.value)
+				{
+					return true;
+				}
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 	}
 }
