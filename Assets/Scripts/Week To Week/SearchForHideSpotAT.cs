@@ -43,7 +43,7 @@ namespace NodeCanvas.Tasks.Actions {
             foreach (Collider collider in objectsInRange)
             {
                 float distanceToPlayer = Vector3.Distance(collider.gameObject.transform.position, playerTransform.value.position);
-                Debug.Log(distanceToPlayer);
+                //Debug.Log(distanceToPlayer);
                 if (distanceToPlayer > bestDistance)
                 {
                     bestHidingSpot = collider.gameObject;
