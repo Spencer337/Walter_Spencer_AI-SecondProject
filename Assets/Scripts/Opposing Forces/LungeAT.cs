@@ -44,7 +44,7 @@ namespace NodeCanvas.Tasks.Actions {
                 navAgent.Warp(agent.transform.position);
                 navAgent.updatePosition = true;
                 navAgent.updateRotation = true;
-                EndAction(false);
+                EndAction(true);
             }
         }
 

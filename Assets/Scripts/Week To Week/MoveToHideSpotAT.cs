@@ -9,6 +9,8 @@ namespace NodeCanvas.Tasks.Actions {
 	public class MoveToHideSpotAT : ActionTask {
 		private NavMeshAgent navAgent;
         public BBParameter<Vector3> targetPosition;
+		public BBParameter<Transform> playerTransform; 
+		public float distanceToPlayer, checkDistance;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -33,7 +35,15 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-			
+            distanceToPlayer = Vector3.Distance(agent.transform.position, playerTransform.value.position);
+            if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1 && distanceToPlayer <= checkDistance)
+            {
+                EndAction(false);
+            }
+            else if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1 && distanceToPlayer >= checkDistance)
+            {
+                EndAction(true);
+            }
         }
 
 		//Called when the task is disabled.
