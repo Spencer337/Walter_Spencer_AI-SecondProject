@@ -26,13 +26,14 @@ namespace NodeCanvas.Tasks.Actions {
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
             // Get the direction toward the player
-            escapeDirection = agent.transform.position - playerTransform.value.position;
+            escapeDirection = playerTransform.value.position - agent.transform.position;
 			// Normalize the direction
-			escapeDirection = Vector3.Normalize(escapeDirection);
+			escapeDirection = escapeDirection.normalized;
             // Inverse the direction
             escapeDirection = escapeDirection * -1;
 			// Multiply the direction by the escape distance;
             escapePoint = escapeDirection * escapeDistance;
+			escapePoint += agent.transform.position;
 			navAgent.SetDestination(escapePoint);
 		}
 

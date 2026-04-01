@@ -39,7 +39,7 @@ namespace NodeCanvas.Tasks.Actions {
             // Lerp between the start and end positions
             agent.transform.position = Vector3.Lerp(startPosition, endPosition, lungeTime / lungeDuration);
             // If the lunge movement is finished, begin updating the nav mesh again, and end the action
-            if (lungeTime > lungeDuration)
+            if (lungeTime >= lungeDuration)
             {
                 navAgent.Warp(agent.transform.position);
                 navAgent.updatePosition = true;

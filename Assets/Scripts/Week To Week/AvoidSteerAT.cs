@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine;
 
 namespace NodeCanvas.Tasks.Actions {
 
-	public class MoveAT : ActionTask {
+	public class AvoidSteerAT : ActionTask {
 		public BBParameter<Vector3> moveDirection;
-		public BBParameter<float> speed;
-		public float stoppingDistance;
+		public LayerMask avoidMask;
+		public float strength;
+
+		public float detectionDistance;
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
@@ -25,20 +28,19 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
-			// Every frame we are moving in the move direction
-			Vector3 directionToMove = moveDirection.value;
+			Collider[] detectedColliders = Physics.OverlapSphere(agent.transform.position, detectionDistance, avoidMask);
 
-			directionToMove = new Vector3(directionToMove.x , 0, directionToMove.z);
+			Vector3 totalDirection = Vector3.zero;
+			foreach (Collider detectedCollider in detectedColliders)
+			{
+				Vector3 directionToHazard = detectedCollider.transform.position - agent.transform.position;
+				totalDirection -= directionToHazard;
+			}
 
-            agent.transform.position += directionToMove.normalized * speed.value * Time.deltaTime;
-			moveDirection.value = Vector3.zero;
+			totalDirection = totalDirection.normalized;
 
-            //float distanceToTarget = Vector3.Distance(agent.transform.position, targetPosition.value);
-            //if (distanceToTarget >= stoppingDistance)
-            //{
-            //    agent.transform.position += directionToMove.normalized * speed.value * Time.deltaTime;
-            //}
-        }
+			moveDirection.value += totalDirection * strength;
+		}
 
 		//Called when the task is disabled.
 		protected override void OnStop() {

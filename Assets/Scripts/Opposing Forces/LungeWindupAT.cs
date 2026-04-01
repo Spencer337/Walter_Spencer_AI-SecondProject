@@ -41,7 +41,7 @@ namespace NodeCanvas.Tasks.Actions {
 			// Lerp between the start and end positions
 			agent.transform.position = Vector3.Lerp(startPosition, windupPosition, windupTime / windupDuration);
 			// If the windup movement is finished, end the action
-			if (windupTime > windupDuration) 
+			if (windupTime >= windupDuration) 
 			{
 				EndAction(true);
 			}
