@@ -963,7 +963,7 @@ MonoBehaviour:
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"baseSpeed":{"_value":3.0,"_name":"baseSpeed","_id":"5fa66b41-2688-450c-b6c6-3db42c0e9854","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"speed":{"_value":3.0,"_name":"speed","_id":"df3e4282-483c-4c87-b11a-c7d45c04d952","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"maxSpeed":{"_value":6.0,"_name":"maxSpeed","_id":"db2f990e-ec90-4b4d-b636-4a6041a106d7","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"speedIncrease":{"_value":0.25,"_name":"speedIncrease","_id":"3326887c-5365-470e-8196-a2dd4f9c5c78","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"speedIncrease":{"_value":0.3,"_name":"speedIncrease","_id":"3326887c-5365-470e-8196-a2dd4f9c5c78","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"playerTransform":{"_value":8,"_name":"playerTransform","_id":"64e78ea8-b8ad-454a-b18d-b065cc341e2f","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"currentIndex":{"_name":"currentIndex","_id":"c784b811-9278-42e9-96a7-7abc36fb01e7","$type":"NodeCanvas.Framework.Variable`1[[System.Int32,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
@@ -1010,7 +1010,7 @@ MonoBehaviour:
   - _json: '{"_value":6.0,"_name":"maxSpeed","_id":"db2f990e-ec90-4b4d-b636-4a6041a106d7","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
-  - _json: '{"_value":0.25,"_name":"speedIncrease","_id":"3326887c-5365-470e-8196-a2dd4f9c5c78","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+  - _json: '{"_value":0.3,"_name":"speedIncrease","_id":"3326887c-5365-470e-8196-a2dd4f9c5c78","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
   - _json: '{"_value":1,"_name":"playerTransform","_id":"64e78ea8-b8ad-454a-b18d-b065cc341e2f","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
