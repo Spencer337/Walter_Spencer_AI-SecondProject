@@ -12,6 +12,8 @@ namespace NodeCanvas.Tasks.Actions {
         public float lungeTime;
         public float lungeDuration;
 		public float lungeDistance;
+        public float distanceToTarget, captureDistance;
+        public BBParameter<Transform> targetTransform;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -45,6 +47,14 @@ namespace NodeCanvas.Tasks.Actions {
                 navAgent.updatePosition = true;
                 navAgent.updateRotation = true;
                 EndAction(true);
+            }
+            distanceToTarget = Vector3.Distance(agent.transform.position, targetTransform.value.position);
+            if (distanceToTarget <= captureDistance)
+            {
+                navAgent.Warp(agent.transform.position);
+                navAgent.updatePosition = true;
+                navAgent.updateRotation = true;
+                EndAction(false);
             }
         }
 

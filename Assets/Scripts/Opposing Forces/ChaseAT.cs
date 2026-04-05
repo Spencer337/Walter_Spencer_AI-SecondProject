@@ -12,6 +12,7 @@ namespace NodeCanvas.Tasks.Actions {
 		public float chaseTime, maxChaseTime;
 		public BBParameter<Transform> targetTransform; 
         public BBParameter<Light> flashlight;
+        public float distanceToTarget, captureDistance;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -40,6 +41,11 @@ namespace NodeCanvas.Tasks.Actions {
 			if (chaseTime >= maxChaseTime)
 			{
 				EndAction(true);
+			}
+            distanceToTarget = Vector3.Distance(agent.transform.position, targetTransform.value.position);
+			if (distanceToTarget <= captureDistance)
+			{
+				EndAction(false);
 			}
         }
 
