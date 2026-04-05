@@ -39,7 +39,7 @@ namespace NodeCanvas.Tasks.Actions {
             }
 			if (chaseTime >= maxChaseTime)
 			{
-				EndAction(false);
+				EndAction(true);
 			}
         }
 

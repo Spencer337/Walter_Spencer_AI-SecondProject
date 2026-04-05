@@ -18,7 +18,7 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			Debug.Log("Looking");
+			//Debug.Log("Looking");
 			lookRepeats.value = Random.Range(1, 5);
 			EndAction(true);
 		}
