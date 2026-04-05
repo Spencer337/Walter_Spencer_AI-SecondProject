@@ -10,8 +10,8 @@ namespace NodeCanvas.Tasks.Actions {
 	public class AlertAT : ActionTask {
 		public BBParameter<AudioClip> alertSound;
 		public BBParameter<Light> flashlight;
-        public BBParameter<Transform> playerTransform; 
-        public float distance, checkdistance; 
+        public BBParameter<Transform> targetTransform; 
+        public float distance, checkDistance; 
         private NavMeshAgent navAgent;
 
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -27,7 +27,7 @@ namespace NodeCanvas.Tasks.Actions {
 		protected override void OnExecute() {
             AudioSource.PlayClipAtPoint(alertSound.value, agent.transform.position);
 			flashlight.value.color = Color.yellow;
-            navAgent.SetDestination(playerTransform.value.position);
+            navAgent.SetDestination(targetTransform.value.position);
 		}
 
 		//Called once per frame while the action is active.
@@ -36,9 +36,9 @@ namespace NodeCanvas.Tasks.Actions {
             if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.2)
             {
                 // Get the distance between the parent and it's target
-                distance = Vector3.Distance(agent.transform.position, playerTransform.value.position);
+                distance = Vector3.Distance(agent.transform.position, targetTransform.value.position);
                 // If the distance is less than the check distance, end the action with a success
-                if (distance < checkdistance)
+                if (distance < checkDistance)
                 {
                     EndAction(true);
                 }

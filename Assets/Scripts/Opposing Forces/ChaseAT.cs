@@ -10,7 +10,7 @@ namespace NodeCanvas.Tasks.Actions {
         private NavMeshAgent navAgent;
 		public float searchInterval, searchTime;
 		public float chaseTime, maxChaseTime;
-		public BBParameter<Transform> playerTransform;
+		public BBParameter<Transform> targetTransform; 
         public BBParameter<Light> flashlight;
 
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -35,7 +35,7 @@ namespace NodeCanvas.Tasks.Actions {
             if (searchTime >= searchInterval)
             {
 				searchTime = 0;
-                navAgent.SetDestination(playerTransform.value.position);
+                navAgent.SetDestination(targetTransform.value.position);
             }
 			if (chaseTime >= maxChaseTime)
 			{

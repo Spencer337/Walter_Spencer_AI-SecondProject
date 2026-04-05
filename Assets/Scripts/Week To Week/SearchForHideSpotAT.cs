@@ -11,9 +11,9 @@ namespace NodeCanvas.Tasks.Actions {
         public int numberOfScanCirclePoints;
         public BBParameter<float> scanRadius;
         public LayerMask targetMask;
-        public BBParameter<Vector3> targetPosition; 
-        public BBParameter<Transform> playerTransform; 
-
+        public BBParameter<Vector3> hidePosition;  
+        public BBParameter<Transform> targetTransform;  
+        
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit()
@@ -42,17 +42,17 @@ namespace NodeCanvas.Tasks.Actions {
             float bestDistance = 0;
             foreach (Collider collider in objectsInRange)
             {
-                float distanceToPlayer = Vector3.Distance(collider.gameObject.transform.position, playerTransform.value.position);
+                float distanceToTarget = Vector3.Distance(collider.gameObject.transform.position, targetTransform.value.position);
                 //Debug.Log(distanceToPlayer);
-                if (distanceToPlayer > bestDistance)
+                if (distanceToTarget > bestDistance)
                 {
                     bestHidingSpot = collider.gameObject;
-                    bestDistance = distanceToPlayer;
+                    bestDistance = distanceToTarget;
                 }
             }
             if (bestHidingSpot != null)
             {
-                targetPosition.value = bestHidingSpot.transform.position;
+                hidePosition.value = bestHidingSpot.transform.position;
             }
             EndAction(true);
 
