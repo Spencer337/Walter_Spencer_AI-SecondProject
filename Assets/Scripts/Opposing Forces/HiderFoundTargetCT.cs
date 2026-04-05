@@ -19,8 +19,8 @@ namespace NodeCanvas.Tasks.Conditions {
 
 		//Called whenever the condition gets enabled.
 		protected override void OnEnable() {
-			
-		}
+            targetTransform.value = null;
+        }
 
 		//Called whenever the condition gets disabled.
 		protected override void OnDisable() {

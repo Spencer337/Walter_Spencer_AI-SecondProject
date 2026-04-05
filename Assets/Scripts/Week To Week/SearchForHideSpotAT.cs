@@ -11,7 +11,7 @@ namespace NodeCanvas.Tasks.Actions {
         public int numberOfScanCirclePoints;
         public BBParameter<float> scanRadius;
         public LayerMask targetMask;
-        public BBParameter<Vector3> hidePosition;  
+        public BBParameter<Transform> hideTransform;
         public BBParameter<Transform> targetTransform;  
         
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -39,22 +39,28 @@ namespace NodeCanvas.Tasks.Actions {
             Collider[] objectsInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, targetMask);
 
             GameObject bestHidingSpot = null;
-            float bestDistance = 0;
+            // Set best distance to the distance from the hider to the target
+            // Don't move to a hiding spot that is closer to the target than the current spot
+            float bestDistance = Vector3.Distance(agent.transform.position, targetTransform.value.position);
             foreach (Collider collider in objectsInRange)
             {
                 float distanceToTarget = Vector3.Distance(collider.gameObject.transform.position, targetTransform.value.position);
-                //Debug.Log(distanceToPlayer);
                 if (distanceToTarget > bestDistance)
                 {
                     bestHidingSpot = collider.gameObject;
                     bestDistance = distanceToTarget;
                 }
             }
-            if (bestHidingSpot != null)
+            if (bestHidingSpot == null || hideTransform.value == bestHidingSpot.transform)
             {
-                hidePosition.value = bestHidingSpot.transform.position;
+                EndAction(false);
             }
-            EndAction(true);
+            else
+            {
+                hideTransform.value = bestHidingSpot.transform;
+                EndAction(true);
+            }
+            
 
         }
 

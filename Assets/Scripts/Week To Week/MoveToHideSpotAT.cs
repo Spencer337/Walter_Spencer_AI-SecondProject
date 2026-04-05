@@ -8,9 +8,10 @@ namespace NodeCanvas.Tasks.Actions {
 
 	public class MoveToHideSpotAT : ActionTask {
 		private NavMeshAgent navAgent;
-        public BBParameter<Vector3> hidePosition; 
+        public BBParameter<Transform> hideTransform;
 		public BBParameter<Transform> targetTransform; 
 		public float distanceToTarget, checkDistance;
+		public Vector3 hidePosition;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -25,12 +26,12 @@ namespace NodeCanvas.Tasks.Actions {
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
 			// Get the direction of the hider towards the hideable object's position
-			Vector3 direction = (hidePosition.value - agent.transform.position).normalized;
+			Vector3 direction = (hideTransform.value.position - agent.transform.position).normalized;
 			direction.y = 0;
             // Add the direction to the target position to offset the target position 
-            hidePosition.value += direction;
+            hidePosition = hideTransform.value.position + direction;
             // Set's the hider's destination to the target position
-            navAgent.SetDestination(hidePosition.value);
+            navAgent.SetDestination(hidePosition);
 		}
 
 		//Called once per frame while the action is active.
