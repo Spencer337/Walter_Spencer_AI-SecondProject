@@ -19,17 +19,18 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+			// If the target transform is on the player's layer, end the game
             if (targetTransform.value.gameObject.layer == 9)
 			{
 				Debug.Log("Game Over");
 				EndAction(true);
 			}
+			// If the target transform is on the hider's layer, set the hider to inactive
 			if (targetTransform.value.gameObject.layer == 10)
 			{
                 targetTransform.value.gameObject.SetActive(false);
 				EndAction(true);
             }
-			//EndAction(true);
 		}
 
 		//Called once per frame while the action is active.

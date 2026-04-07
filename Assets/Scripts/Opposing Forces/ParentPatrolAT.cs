@@ -43,11 +43,13 @@ namespace NodeCanvas.Tasks.Actions {
 			{
 				speed.value = maxSpeed.value;
 			}
+			// Set the speed of the parent to the speed value
 			navAgent.speed = speed.value;
         }
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
+			// If the parent has reacher the destination, end with a success
             if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1)
             {
 				currentIndex.value += 1;

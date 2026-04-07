@@ -35,6 +35,7 @@ namespace NodeCanvas.Tasks.Conditions {
 
             foreach (Collider parentCollider in parentsInRange)
             {
+                // Set the target transform to the parent
                 targetTransform.value = parentCollider.gameObject.transform;
             }
 
@@ -42,13 +43,17 @@ namespace NodeCanvas.Tasks.Conditions {
             Collider[] playersInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, playerMask);
             foreach (Collider playerCollider in playersInRange)
             {
+                // Set the target transform to the player
+                // This takes priority over the parent
                 targetTransform.value = playerCollider.gameObject.transform;
             }
 
+            // If theres no target transform, return false
             if (targetTransform.value == null)
             {
                 return false;
             }
+            // Otherwise, return true
             else
             {
                 return true;

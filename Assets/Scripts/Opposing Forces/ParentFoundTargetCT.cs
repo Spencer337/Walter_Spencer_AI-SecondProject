@@ -34,10 +34,14 @@ namespace NodeCanvas.Tasks.Conditions {
 			// Get a list of hiders in range of a scanning sphere centered on the parent
 			Collider[] hidersInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, hiderMask);
 
+			// Set the closest distance to a very large number
 			float closestDistance = 10000;
+			// For each hider detected by the parent
 			foreach (Collider hiderCollider in hidersInRange)
 			{
+				// Get the distance from the parent to the hider
 				float distanceToTarget = Vector3.Distance(hiderCollider.gameObject.transform.position, agent.transform.position);
+				// If the distance is less than the closest distance, set the target transform to the hider's transform and set the closest distance to the distance to the hider
 				if (distanceToTarget < closestDistance)
 				{
 					targetTransform.value = hiderCollider.gameObject.transform;
@@ -49,13 +53,16 @@ namespace NodeCanvas.Tasks.Conditions {
 			Collider[] playersInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, playerMask);
 			foreach (Collider playerCollider in playersInRange)
 			{
+				// If there is a player detected in the parent's range, set the target transform to the player
 				targetTransform.value = playerCollider.gameObject.transform;
 			}
 
+			// If theres no target transform, return false
 			if (targetTransform.value == null)
 			{
 				return false;
 			}
+			// Otherwise, return true
 			else
 			{
 				return true;

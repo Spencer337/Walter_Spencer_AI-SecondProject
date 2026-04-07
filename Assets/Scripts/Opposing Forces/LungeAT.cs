@@ -40,7 +40,7 @@ namespace NodeCanvas.Tasks.Actions {
             lungeTime += Time.deltaTime;
             // Lerp between the start and end positions
             agent.transform.position = Vector3.Lerp(startPosition, endPosition, lungeTime / lungeDuration);
-            // If the lunge movement is finished, begin updating the nav mesh again, and end the action
+            // If the lunge movement is finished, begin updating the nav mesh again, and end the action with a success
             if (lungeTime >= lungeDuration)
             {
                 navAgent.Warp(agent.transform.position);
@@ -48,7 +48,11 @@ namespace NodeCanvas.Tasks.Actions {
                 navAgent.updateRotation = true;
                 EndAction(true);
             }
+
+            // Get the distance between the parent and target
             distanceToTarget = Vector3.Distance(agent.transform.position, targetTransform.value.position);
+
+            // If the distance is less than the capture distance, begin updating the nav mesh again, and end the action with a failure
             if (distanceToTarget <= captureDistance)
             {
                 navAgent.Warp(agent.transform.position);

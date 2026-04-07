@@ -10,6 +10,7 @@ namespace NodeCanvas.Tasks.Actions {
 		public float growSpeed = 10;
 		public float YScale;
 		public bool growing;
+		public float maxHeight, normalHeight;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -21,6 +22,7 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+			// Play the gasp sound, and set growing to true
             AudioSource.PlayClipAtPoint(gaspSound.value, agent.transform.position);
 			growing = true;
 		}
@@ -29,23 +31,32 @@ namespace NodeCanvas.Tasks.Actions {
 		protected override void OnUpdate() {
 			YScale = agent.transform.localScale.y;
 			
-			// Increase the height of the object until it equals 2
+			// Increase the height of the hider until it equals max height
             if (growing == true)
 			{
-				YScale += Time.deltaTime * growSpeed;
-				agent.transform.localScale = new Vector3(agent.transform.localScale.x, YScale, agent.transform.localScale.z);
-				if (YScale >= 2)
+                // Increase the y scale by time multiplied by grow speed
+                YScale += Time.deltaTime * growSpeed;
+                // Set the height to the y scale
+                agent.transform.localScale = new Vector3(agent.transform.localScale.x, maxHeight, agent.transform.localScale.z);
+
+				// If the y scale is greater than the max height, set growing to false
+				if (YScale >= maxHeight)
 				{
 					growing = false;
 				}
             }
+			// Then decrease the height of the hider until it is back to normal
             else
             {
+				// Decrease the y scale by time multiplied by grow speed
                 YScale -= Time.deltaTime * growSpeed;
+				// Set the height to the y scale
                 agent.transform.localScale = new Vector3(agent.transform.localScale.x, YScale, agent.transform.localScale.z);
-				if (YScale <= 1.5)
+
+				// If the y scale is less than the normal height, end the action and set the hider's height to it's normal height
+				if (YScale <= normalHeight)
 				{
-                    agent.transform.localScale = new Vector3(agent.transform.localScale.x, 1.5f, agent.transform.localScale.z);
+                    agent.transform.localScale = new Vector3(agent.transform.localScale.x, normalHeight, agent.transform.localScale.z);
                     EndAction(true);
 				}
             }

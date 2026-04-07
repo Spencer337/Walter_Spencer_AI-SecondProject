@@ -38,23 +38,30 @@ namespace NodeCanvas.Tasks.Actions {
             // Get a list of objects in range of a scanning sphere centered on the hider, that are on the hideables layer
             Collider[] objectsInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, targetMask);
 
+            // Reset the best hiding spot
             GameObject bestHidingSpot = null;
             // Set best distance to the distance from the hider to the target
             // Don't move to a hiding spot that is closer to the target than the current spot
             float bestDistance = Vector3.Distance(agent.transform.position, targetTransform.value.position);
             foreach (Collider collider in objectsInRange)
             {
+                // Get the distance from the hider to the current hide spot
                 float distanceToTarget = Vector3.Distance(collider.gameObject.transform.position, targetTransform.value.position);
+                // If the distance is more than the best distance
                 if (distanceToTarget > bestDistance)
                 {
+                    // Set the best hide spot to the current hide spot, and the best distance to the current distance
                     bestHidingSpot = collider.gameObject;
                     bestDistance = distanceToTarget;
                 }
             }
+            // If there is no best heiding spot, or the best hiding spot is the current hiding spot, end the action with a failure
             if (bestHidingSpot == null || hideTransform.value == bestHidingSpot.transform)
             {
                 EndAction(false);
             }
+
+            // Otherwise, end the action with a success
             else
             {
                 hideTransform.value = bestHidingSpot.transform;

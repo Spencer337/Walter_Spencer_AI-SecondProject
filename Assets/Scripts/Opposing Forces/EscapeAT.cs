@@ -31,17 +31,22 @@ namespace NodeCanvas.Tasks.Actions {
             escapeDirection = escapeDirection * -1;
 			// Multiply the direction by the escape distance;
             escapePoint = escapeDirection * escapeDistance;
+			// Add the hider's position as an offset
 			escapePoint += agent.transform.position;
+			// Set the hider's destionation to the escape point 
 			navAgent.SetDestination(escapePoint);
 		}
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
+            // Get the distance from the hider to the target transform
             distanceToTarget = Vector3.Distance(agent.transform.position, targetTransform.value.position);
-			if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1 && distanceToTarget <= checkDistance)
+            // If the nav agent's path is done, and the distance to the target is less than the check distance, end the action with a failure
+            if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1 && distanceToTarget <= checkDistance)
 			{
 				EndAction(false);
 			}
+            // If the nav agent's path is done, and the distance to the target is greater than the check distance, end the action with a failure
             else if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1 && distanceToTarget >= checkDistance)
             {
                 EndAction(true);
