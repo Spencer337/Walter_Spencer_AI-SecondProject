@@ -13,6 +13,7 @@ namespace NodeCanvas.Tasks.Actions {
         public BBParameter<Transform> targetTransform; 
         public float distance, checkDistance; 
         private NavMeshAgent navAgent;
+        public BBParameter<float> speed, baseSpeed; 
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -25,8 +26,14 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+            // Reset the speed of the parent to the base speed
+            speed.value = baseSpeed.value;
+            navAgent.speed = speed.value;
+
+            // Play an alert noise and change the flashlight color to red
             AudioSource.PlayClipAtPoint(alertSound.value, agent.transform.position);
 			flashlight.value.color = Color.yellow;
+            // Set the parent's destination to the target transform
             navAgent.SetDestination(targetTransform.value.position);
 		}
 
