@@ -32,7 +32,7 @@ namespace NodeCanvas.Tasks.Actions {
 
             // Play an alert noise and change the flashlight color to red
             AudioSource.PlayClipAtPoint(alertSound.value, agent.transform.position);
-			flashlight.value.color = Color.yellow;
+			flashlight.value.color = Color.orange;
             // Set the parent's destination to the target transform
             navAgent.SetDestination(targetTransform.value.position);
 		}

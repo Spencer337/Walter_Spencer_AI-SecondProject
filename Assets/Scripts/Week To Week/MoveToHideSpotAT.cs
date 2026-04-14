@@ -12,6 +12,7 @@ namespace NodeCanvas.Tasks.Actions {
 		public BBParameter<Transform> targetTransform; 
 		public float distanceToTarget, checkDistance;
 		public Vector3 hidePosition;
+		public BBParameter<float> normalSpeed; 
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
@@ -32,7 +33,9 @@ namespace NodeCanvas.Tasks.Actions {
             hidePosition = hideTransform.value.position + direction;
             // Set's the hider's destination to the target position
             navAgent.SetDestination(hidePosition);
-		}
+            // Set the hider's speed to the normal speed
+            navAgent.speed = normalSpeed.value;
+        }
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {

@@ -13,11 +13,12 @@ namespace NodeCanvas.Tasks.Actions {
 		private NavMeshAgent navAgent;
 		public BBParameter<float> baseSpeed, speed, maxSpeed, speedIncrease;
 		public BBParameter<int> currentIndex;
-		public BBParameter<List<Transform>> patrolPoints; 
+		public BBParameter<List<Transform>> patrolPoints;
+        public BBParameter<Light> flashlight; 
 
-		//Use for initialization. This is called only once in the lifetime of the task.
-		//Return null if init was successfull. Return an error string otherwise
-		protected override string OnInit() {
+        //Use for initialization. This is called only once in the lifetime of the task.
+        //Return null if init was successfull. Return an error string otherwise
+        protected override string OnInit() {
             navAgent = agent.GetComponent<NavMeshAgent>();
             return null;
 		}
@@ -26,9 +27,11 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			
-			// If the current index is greater than the list's length, set the current index to the start of the list
-			if (currentIndex.value >= patrolPoints.value.Count)
+            // Change the parent's flashlight colour to white
+            flashlight.value.color = Color.white;
+
+            // If the current index is greater than the list's length, set the current index to the start of the list
+            if (currentIndex.value >= patrolPoints.value.Count)
 			{
 				currentIndex.value = 0;
 			}

@@ -11,6 +11,7 @@ namespace NodeCanvas.Tasks.Actions {
 		private NavMeshAgent navAgent;
 		public Vector3 escapeDirection, escapePoint;
 		public float escapeDistance, checkDistance, distanceToTarget;
+		public BBParameter<float> runSpeed; 
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
@@ -23,6 +24,8 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+            // Set the hider's colour to purple
+            agent.GetComponent<Renderer>().material.color = Color.purple;
             // Get the direction toward the player
             escapeDirection = targetTransform.value.position - agent.transform.position;
 			// Normalize the direction
@@ -35,6 +38,8 @@ namespace NodeCanvas.Tasks.Actions {
 			escapePoint += agent.transform.position;
 			// Set the hider's destionation to the escape point 
 			navAgent.SetDestination(escapePoint);
+			// Set the hider's speed to the run speed
+			navAgent.speed = runSpeed.value;
 		}
 
 		//Called once per frame while the action is active.

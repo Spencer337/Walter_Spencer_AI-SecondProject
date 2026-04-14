@@ -20,8 +20,10 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			// Set the value of rotation start
-			rotationStart = agent.transform.rotation.y;
+            // Set the hider's colour to blue
+            agent.GetComponent<Renderer>().material.color = Color.darkGreen;
+            // Set the value of rotation start
+            rotationStart = agent.transform.rotation.y;
             currentRotation = rotationStart;
 
             // Reset the rotatingBackToStart and rotationTime variables
