@@ -14,11 +14,12 @@ namespace NodeCanvas.Tasks.Actions {
 		public BBParameter<float> baseSpeed, speed, maxSpeed, speedIncrease;
 		public BBParameter<int> currentIndex;
 		public BBParameter<List<Transform>> patrolPoints;
-        public BBParameter<Light> flashlight; 
+        public BBParameter<Light> flashlight;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit() {
+
             navAgent = agent.GetComponent<NavMeshAgent>();
             return null;
 		}
@@ -27,6 +28,9 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+			// Set the walk sound timer to 0
+			//walkSoundTimer = 0;
+			
             // Change the parent's flashlight colour to white
             flashlight.value.color = Color.white;
 
@@ -52,6 +56,7 @@ namespace NodeCanvas.Tasks.Actions {
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
+
 			// If the parent has reacher the destination, end with a success
             if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1)
             {

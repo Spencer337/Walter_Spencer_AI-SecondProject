@@ -10,12 +10,13 @@ namespace NodeCanvas.Tasks.Actions {
 		public BBParameter<Transform> targetTransform;
 		private NavMeshAgent navAgent;
 		public Vector3 escapeDirection, escapePoint;
-		public float escapeDistance, checkDistance, distanceToTarget;
-		public BBParameter<float> runSpeed; 
+		public float escapeDistance, checkDistance, distanceToTarget, runVolume;
+		public BBParameter<float> runSpeed;
+        public BBParameter<AudioClip> hiderRunSound; 
 
-		//Use for initialization. This is called only once in the lifetime of the task.
-		//Return null if init was successfull. Return an error string otherwise
-		protected override string OnInit() {
+        //Use for initialization. This is called only once in the lifetime of the task.
+        //Return null if init was successfull. Return an error string otherwise
+        protected override string OnInit() {
             navAgent = agent.GetComponent<NavMeshAgent>();
             return null;
 		}
@@ -26,20 +27,30 @@ namespace NodeCanvas.Tasks.Actions {
 		protected override void OnExecute() {
             // Set the hider's colour to purple
             agent.GetComponent<Renderer>().material.color = Color.purple;
+
             // Get the direction toward the player
             escapeDirection = targetTransform.value.position - agent.transform.position;
+
 			// Normalize the direction
 			escapeDirection = escapeDirection.normalized;
+
             // Inverse the direction
             escapeDirection = escapeDirection * -1;
+
 			// Multiply the direction by the escape distance;
             escapePoint = escapeDirection * escapeDistance;
+
 			// Add the hider's position as an offset
 			escapePoint += agent.transform.position;
+
 			// Set the hider's destionation to the escape point 
 			navAgent.SetDestination(escapePoint);
+
 			// Set the hider's speed to the run speed
 			navAgent.speed = runSpeed.value;
+
+			// Play the hider's run sound
+			AudioSource.PlayClipAtPoint(hiderRunSound.value, agent.transform.position, runVolume);
 		}
 
 		//Called once per frame while the action is active.

@@ -8,7 +8,8 @@ namespace NodeCanvas.Tasks.Actions {
 	public class CaptureAT : ActionTask {
 		public BBParameter<Transform> targetTransform;
 		public LayerMask playerMask, hiderMask;
-		public BBParameter<GameObject> defeatPanel; 
+		public BBParameter<GameObject> defeatPanel;
+		public BBParameter<AudioClip> hiderCaughtSound;
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
@@ -30,6 +31,9 @@ namespace NodeCanvas.Tasks.Actions {
 			// If the target transform is on the hider's layer, set the hider to inactive
 			if (targetTransform.value.gameObject.layer == 10)
 			{
+                // Play the hider caught sound
+                AudioSource.PlayClipAtPoint(hiderCaughtSound.value, agent.transform.position);
+
                 targetTransform.value.gameObject.SetActive(false);
 				EndAction(true);
             }
