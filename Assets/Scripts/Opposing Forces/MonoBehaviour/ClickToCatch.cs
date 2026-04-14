@@ -1,6 +1,7 @@
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class ClickToCatch : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class ClickToCatch : MonoBehaviour
     private Ray mouseClickRay;
     private RaycastHit mouseClickHit;
     public GameObject target;
-    public float catchDistance;
+    public float catchDistance, hidersCaught;
+    public TMP_Text caughtText, scoreText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,13 +27,17 @@ public class ClickToCatch : MonoBehaviour
             Vector3 mousePosition = Mouse.current.position.ReadValue();
 
             mouseClickRay = Camera.main.ScreenPointToRay(mousePosition);
-            // If the ray hits a sand spot, delete it
+            // If the ray hits a hider spot, delete it and increase hiders caught by 1
             if (Physics.Raycast(mouseClickRay, out mouseClickHit, catchDistance, hiderMask))
             {
+                hidersCaught += 1;
                 target = mouseClickHit.transform.gameObject;
                 Destroy(target);
-                Debug.Log("Hider Caught");
                 target = null;
+
+                // Set the caught text and score text to the number of hiders caught
+                caughtText.text = hidersCaught.ToString();
+                scoreText.text = hidersCaught.ToString();
             }
         }
     }

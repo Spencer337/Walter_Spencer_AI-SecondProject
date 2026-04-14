@@ -8,6 +8,7 @@ namespace NodeCanvas.Tasks.Actions {
 	public class CaptureAT : ActionTask {
 		public BBParameter<Transform> targetTransform;
 		public LayerMask playerMask, hiderMask;
+		public BBParameter<GameObject> defeatPanel; 
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
@@ -19,11 +20,12 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			// If the target transform is on the player's layer, end the game
+			// If the target transform is on the player's layer, end the game and pause time
             if (targetTransform.value.gameObject.layer == 9)
 			{
-				Debug.Log("Game Over");
-				EndAction(true);
+				defeatPanel.value.SetActive(true);
+                Time.timeScale = 0;
+                EndAction(true);
 			}
 			// If the target transform is on the hider's layer, set the hider to inactive
 			if (targetTransform.value.gameObject.layer == 10)

@@ -8,7 +8,8 @@ namespace NodeCanvas.Tasks.Actions {
 	public class HiderLookAT : ActionTask {
 		public BBParameter<int> lookRepeats;
 		public float rotationMax, rotationStart, currentRotation, rotationTime, rotationDuration;
-		public bool rotatingRight, rotatingLeft, rotatingBackToStart; 
+		public bool rotatingRight, rotatingLeft, rotatingBackToStart;
+        public int maxLookRepeats;
 
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
@@ -30,8 +31,8 @@ namespace NodeCanvas.Tasks.Actions {
             rotatingBackToStart = false;
             rotationTime = 0;
 
-            // Randomize the number of look repeats between 1 and 5
-            lookRepeats.value = Random.Range(1, 5);
+            // Randomize the number of look repeats between 1 and 3
+            lookRepeats.value = Random.Range(1, maxLookRepeats);
 		}
 
 		//Called once per frame while the action is active.
