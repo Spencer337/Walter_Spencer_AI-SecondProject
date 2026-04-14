@@ -32,9 +32,6 @@ namespace NodeCanvas.Tasks.Actions {
         //Called once per frame while the action is active.
         protected override void OnUpdate()
         {
-            // Draw the scanning circle which comes out from the hider's position to visualize the scanning
-            DrawCircle(agent.transform.position, scanRadius.value, scanColour, numberOfScanCirclePoints);
-
             // Get a list of objects in range of a scanning sphere centered on the hider, that are on the hideables layer
             Collider[] objectsInRange = Physics.OverlapSphere(agent.transform.position, scanRadius.value, targetMask);
 
@@ -60,7 +57,7 @@ namespace NodeCanvas.Tasks.Actions {
             {
                 EndAction(false);
             }
-
+            
             // Otherwise, end the action with a success
             else
             {
@@ -68,21 +65,6 @@ namespace NodeCanvas.Tasks.Actions {
                 EndAction(true);
             }
             
-
-        }
-
-        private void DrawCircle(Vector3 center, float radius, Color colour, int numberOfPoints)
-        {
-            Vector3 startPoint, endPoint;
-            int anglePerPoint = 360 / numberOfPoints;
-            for (int i = 1; i <= numberOfPoints; i++)
-            {
-                startPoint = new Vector3(Mathf.Cos(Mathf.Deg2Rad * anglePerPoint * (i - 1)), 0, Mathf.Sin(Mathf.Deg2Rad * anglePerPoint * (i - 1)));
-                startPoint = center + startPoint * radius;
-                endPoint = new Vector3(Mathf.Cos(Mathf.Deg2Rad * anglePerPoint * i), 0, Mathf.Sin(Mathf.Deg2Rad * anglePerPoint * i));
-                endPoint = center + endPoint * radius;
-                Debug.DrawLine(startPoint, endPoint, colour);
-            }
 
         }
 
