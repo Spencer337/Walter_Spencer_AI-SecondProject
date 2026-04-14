@@ -28,10 +28,10 @@ namespace NodeCanvas.Tasks.Actions {
 			// Set the parent's flashlight to be red
             flashlight.value.color = Color.red;
 			chaseTime = 0;
-		}
+        }
 
-		//Called once per frame while the action is active.
-		protected override void OnUpdate() {
+        //Called once per frame while the action is active.
+        protected override void OnUpdate() {
 			// Increase search time and chase time by time.deltaTime
             searchTime += Time.deltaTime;
 			chaseTime += Time.deltaTime;

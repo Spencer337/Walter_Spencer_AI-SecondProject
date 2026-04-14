@@ -42,25 +42,27 @@ namespace NodeCanvas.Tasks.Actions {
 			// Set the target point to the current patrol point in the array
 			targetTransform.value = patrolPoints.value[currentIndex.value];
 			// Set the parent's destination to the patrol point
-            navAgent.SetDestination(targetTransform.value.position);
-			// Increase speed by the speed increase
-			speed.value += speedIncrease.value;
-			// If speed is greater than max speed, set speed to max speed
-			if (speed.value > maxSpeed.value)
-			{
-				speed.value = maxSpeed.value;
-			}
-			// Set the speed of the parent to the speed value
-			navAgent.speed = speed.value;
+			navAgent.SetDestination(targetTransform.value.position);
         }
 
 		//Called once per frame while the action is active.
 		protected override void OnUpdate() {
 
-			// If the parent has reacher the destination, end with a success
+			// If the parent has reacher the destination
             if (navAgent.pathPending == false && navAgent.remainingDistance <= 0.1)
             {
-				currentIndex.value += 1;
+                // Increase speed by the speed increase
+                speed.value += speedIncrease.value;
+                // If speed is greater than max speed, set speed to max speed
+                if (speed.value > maxSpeed.value)
+                {
+                    speed.value = maxSpeed.value;
+                }
+                // Set the speed of the parent to the speed value
+                navAgent.speed = speed.value;
+
+				// Increase the index by one and end with a success
+                currentIndex.value += 1;
                 EndAction(true);
             }
         }
